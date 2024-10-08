@@ -19,22 +19,23 @@ COPY . .
 EXPOSE 3002
 
 # Command to run the application
-CMD ["npm", "start"],
+CMD ["npm", "start"]
 
-#This is an example webapp.io configuration for NodeJS
-FROM vm/ubuntu:18.04
+# This is an example webapp.io configuration for NodeJS
+# The following lines should not be in the same Layerfile
+# as the previous Node.js configuration.
+
+# FROM vm/ubuntu:18.04
 # To note: Layerfiles create VMs, *not* containers!
 
 # Install node
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash && \
-    apt install nodejs && \
-    rm -f /etc/apt/sources.list.d/nodesource.list
-RUN npm install -g http-server
+# RUN curl -sL https://deb.nodesource.com/setup_12.x | bash && \
+#     apt install -y nodejs && \
+#     rm -f /etc/apt/sources.list.d/nodesource.list
+# RUN npm install -g http-server
 
-COPY . .
-RUN echo 'hello' > hello.html
+# COPY . .
+# RUN echo 'hello' > hello.html
 
-EXPOSE 8000
-RUN BACKGROUND http-server -p 8000
-
-# checking
+# EXPOSE 8000
+# RUN BACKGROUND http-server -p 8000
