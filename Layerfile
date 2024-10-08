@@ -1,24 +1,39 @@
 # Layerfile
 
-# This is an example webapp.io configuration for NodeJS
-FROM vm/ubuntu:18.04
+# Use the official Node.js base image
+FROM node:20
 
-# Install Node.js
-RUN curl -sL https://deb.nodesource.com/setup_12.x | bash && \
-    apt install -y nodejs && \
-    rm -f /etc/apt/sources.list.d/nodesource.list
+# Set the working directory
+WORKDIR /calender-app
 
-# Install http-server globally
-RUN npm install -g http-server
+# Copy package.json and package-lock.json
+COPY package*.json ./
 
-# Copy application code
+# Install dependencies
+RUN npm install
+
+# Copy the rest of the application code
 COPY . .
 
-# Create a sample file (optional)
+# Expose the port the app runs on
+EXPOSE 3002
+
+# Command to run the application
+CMD ["npm", "start"]
+
+
+#This is an example webapp.io configuration for NodeJS
+FROM vm/ubuntu:18.04
+# To note: Layerfiles create VMs, *not* containers!
+
+# Install node
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash && \
+    apt install nodejs && \
+    rm -f /etc/apt/sources.list.d/nodesource.list
+RUN npm install -g http-server
+
+COPY . .
 RUN echo 'hello' > hello.html
 
-# Run the server in the background
 RUN BACKGROUND http-server -p 8000
-
-# Expose the website
 EXPOSE 8000
