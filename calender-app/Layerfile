@@ -34,6 +34,7 @@ RUN npm install -g http-server
 COPY . .
 RUN echo 'hello' > hello.html
 
-RUN BACKGROUND http-server -p 8000
 EXPOSE 8000
+RUN BACKGROUND http-server -p 8000
+
 # checking
