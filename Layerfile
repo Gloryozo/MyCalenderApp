@@ -1,22 +1,24 @@
 # Layerfile
 
-# Use the official Node.js base image
-FROM node:20
+# This is an example webapp.io configuration for NodeJS
+FROM vm/ubuntu:18.04
 
-# Set the working directory
-WORKDIR /app
+# Install Node.js
+RUN curl -sL https://deb.nodesource.com/setup_12.x | bash && \
+    apt install -y nodejs && \
+    rm -f /etc/apt/sources.list.d/nodesource.list
 
-# Copy package.json and package-lock.json
-COPY package*.json ./
+# Install http-server globally
+RUN npm install -g http-server
 
-# Install dependencies
-RUN npm install
-
-# Copy the rest of the application code
+# Copy application code
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 3002
+# Create a sample file (optional)
+RUN echo 'hello' > hello.html
 
-# Command to run the application
-CMD ["npm", "start"]
+# Run the server in the background
+RUN BACKGROUND http-server -p 8000
+
+# Expose the website
+EXPOSE 8000
