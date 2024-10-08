@@ -19,8 +19,7 @@ COPY . .
 EXPOSE 3002
 
 # Command to run the application
-CMD ["npm", "start"]
-
+CMD ["npm", "start"],
 
 #This is an example webapp.io configuration for NodeJS
 FROM vm/ubuntu:18.04
